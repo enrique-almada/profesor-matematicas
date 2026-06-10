@@ -1,0 +1,117 @@
+.msg-renderer {
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.msg-renderer p {
+  margin: 0 0 8px;
+}
+
+.msg-renderer p:last-child {
+  margin-bottom: 0;
+}
+
+.msg-renderer h2, .msg-renderer h3, .msg-renderer h4 {
+  color: var(--primary-dark);
+  margin: 12px 0 6px;
+  font-size: 15px;
+}
+
+.msg-renderer h2 { font-size: 17px; }
+
+.msg-renderer ul, .msg-renderer ol {
+  padding-left: 20px;
+  margin: 6px 0;
+}
+
+.msg-renderer li {
+  margin: 4px 0;
+}
+
+.msg-renderer code {
+  background: rgba(0,0,0,0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.msg-renderer pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 8px 0;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.msg-renderer pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+/* KaTeX display math */
+.msg-renderer .katex-display {
+  margin: 12px 0;
+  overflow-x: auto;
+}
+
+.msg-renderer strong {
+  color: var(--text);
+}
+
+/* Tables */
+.msg-renderer table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.msg-renderer th {
+  background: var(--primary);
+  color: white;
+  padding: 8px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.msg-renderer td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.msg-renderer tr:nth-child(even) td {
+  background: var(--surface2);
+}
+
+.msg-renderer tr:last-child td {
+  border-bottom: none;
+}
+
+.msg-renderer th:first-child { border-radius: 8px 0 0 0; }
+.msg-renderer th:last-child  { border-radius: 0 8px 0 0; }
+
+.msg-renderer table {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+/* For user bubble (white text) */
+.message.user .msg-renderer h2,
+.message.user .msg-renderer h3,
+.message.user .msg-renderer h4,
+.message.user .msg-renderer strong {
+  color: white;
+}
+
+.message.user .msg-renderer code {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}

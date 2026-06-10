@@ -15,7 +15,8 @@ export default function Exercises({ level }) {
   const [feedback, setFeedback] = useState(null)
   const [loading, setLoading] = useState(false)
   const [checking, setChecking] = useState(false)
-  const [apiKey] = useState(localStorage.getItem('anthropic_key') || '')
+  const envKey = import.meta.env.VITE_ANTHROPIC_API_KEY || ''
+  const [apiKey] = useState(localStorage.getItem('anthropic_key') || envKey)
   const [score, setScore] = useState({ correct: 0, total: 0 })
 
   const getExercise = async () => {

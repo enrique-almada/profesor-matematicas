@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { sendMessage } from '../services/claude'
+import MessageRenderer from './MessageRenderer'
+import { useSpeech } from '../hooks/useSpeech'
 import './Chat.css'
 
 const SUGGESTED = {
@@ -32,15 +34,17 @@ export default function Chat({ level }) {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [apiKey, setApiKey] = useState(localStorage.getItem('anthropic_key') || '')
-  const [showKeyInput, setShowKeyInput] = useState(!localStorage.getItem('anthropic_key'))
+  const [speakingIndex, setSpeakingIndex] = useState(null)
+  const { speak, stop, supported: speechSupported } = useSpeech()
+  const envKey = import.meta.env.VITE_ANTHROPIC_API_KEY || ''
+  const [apiKey, setApiKey] = useState(localStorage.getItem('anthropic_key') || envKey)
+  const [showKeyInput, setShowKeyInput] = useState(!localStorage.getItem('anthropic_key') && !envKey)
   const bottomRef = useRef(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
-  // Update welcome message when level changes
   useEffect(() => {
     setMessages([{
       role: 'assistant',
@@ -83,15 +87,6 @@ export default function Chat({ level }) {
     }
   }
 
-  const formatMessage = (text) => {
-    // Simple markdown-like formatting
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`(.*?)`/g, '<code>$1</code>')
-      .replace(/\n/g, '<br/>')
-  }
-
   return (
     <div className="chat">
       {showKeyInput && (
@@ -120,10 +115,35 @@ export default function Chat({ level }) {
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
             {msg.role === 'assistant' && <span className="avatar">📐</span>}
-            <div
-              className="bubble"
-              dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
-            />
+            <div className="bubble">
+              <MessageRenderer content={msg.content} />
+              {msg.role === 'assistant' && speechSupported && (
+                <button
+                  className={`speak-btn ${speakingIndex === i ? 'speaking' : ''}`}
+                  title={speakingIndex === i ? 'Detener audio' : 'Escuchar explicación'}
+                  onClick={() => {
+                    if (speakingIndex === i) {
+                      stop()
+                      setSpeakingIndex(null)
+                    } else {
+                      stop()
+                      setSpeakingIndex(i)
+                      speak(msg.content)
+                      // Reset index when speech ends
+                      const synth = window.speechSynthesis
+                      const check = setInterval(() => {
+                        if (!synth.speaking) {
+                          setSpeakingIndex(null)
+                          clearInterval(check)
+                        }
+                      }, 300)
+                    }
+                  }}
+                >
+                  {speakingIndex === i ? '⏹' : '🔊'}
+                </button>
+              )}
+            </div>
           </div>
         ))}
         {loading && (

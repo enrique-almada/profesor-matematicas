@@ -1,0 +1,14 @@
+.diagram-wrap {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: inline-flex;
+  justify-content: center;
+  margin: 8px 0;
+  box-shadow: var(--shadow);
+}
+
+.diagram-wrap svg {
+  display: block;
+}
