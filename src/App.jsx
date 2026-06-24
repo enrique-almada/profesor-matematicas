@@ -6,17 +6,18 @@ import './App.css'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('chat')
+  const [subjectId, setSubjectId] = useState('matematicas')
   const [level, setLevel] = useState('secundaria')
 
   return (
     <div className="app">
-      <Header level={level} setLevel={setLevel} />
+      <Header subjectId={subjectId} setSubjectId={setSubjectId} level={level} setLevel={setLevel} />
       <nav className="tabs">
         <button
           className={`tab ${activeTab === 'chat' ? 'active' : ''}`}
           onClick={() => setActiveTab('chat')}
         >
-          💬 Pregúntale al Profesor
+          💬 Pregúntale al Tutor
         </button>
         <button
           className={`tab ${activeTab === 'exercises' ? 'active' : ''}`}
@@ -27,9 +28,9 @@ export default function App() {
       </nav>
       <main className="main">
         {activeTab === 'chat' ? (
-          <Chat level={level} />
+          <Chat subjectId={subjectId} level={level} />
         ) : (
-          <Exercises level={level} />
+          <Exercises key={`${subjectId}-${level}`} subjectId={subjectId} level={level} />
         )}
       </main>
     </div>

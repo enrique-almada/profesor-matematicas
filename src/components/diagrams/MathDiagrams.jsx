@@ -1,23 +1,5 @@
-import './MathDiagram.css'
-
-// Renders structured math diagrams as SVG based on type
-export default function MathDiagram({ type, params = {} }) {
-  switch (type) {
-    case 'right-triangle':
-      return <RightTriangle {...params} />
-    case 'circle':
-      return <Circle {...params} />
-    case 'coordinate-plane':
-      return <CoordinatePlane {...params} />
-    case 'bar-chart':
-      return <BarChart {...params} />
-    default:
-      return null
-  }
-}
-
 // ── Right Triangle (Pythagorean Theorem) ────────────────────────────────────
-function RightTriangle({ a = 3, b = 4, c = 5, label = true }) {
+export function RightTriangle({ a = 3, b = 4, c = 5, label = true }) {
   const scale = 50
   const pad = 40
   const W = b * scale + pad * 2
@@ -71,9 +53,8 @@ function RightTriangle({ a = 3, b = 4, c = 5, label = true }) {
 }
 
 // ── Circle ───────────────────────────────────────────────────────────────────
-function Circle({ r = 5, label = true }) {
+export function Circle({ r = 5, label = true }) {
   const pad = 50
-  const cx = 120, cy = 120
   const scale = Math.min(70 / r, 20)
   const sr = r * scale
   const W = sr * 2 + pad * 2
@@ -104,7 +85,7 @@ function Circle({ r = 5, label = true }) {
 }
 
 // ── Coordinate Plane ─────────────────────────────────────────────────────────
-function CoordinatePlane({ points = [], slope, intercept, xmin = -5, xmax = 5 }) {
+export function CoordinatePlane({ points = [], slope, intercept, xmin = -5, xmax = 5 }) {
   const W = 300, H = 280, pad = 40
   const toSvgX = x => pad + ((x - xmin) / (xmax - xmin)) * (W - pad * 2)
   const toSvgY = y => H - pad - ((y - xmin) / (xmax - xmin)) * (H - pad * 2)
@@ -180,7 +161,7 @@ function CoordinatePlane({ points = [], slope, intercept, xmin = -5, xmax = 5 })
 }
 
 // ── Bar Chart ────────────────────────────────────────────────────────────────
-function BarChart({ data = [], title = '' }) {
+export function BarChart({ data = [], title = '' }) {
   const W = 320, H = 240, pad = 40
   const maxVal = Math.max(...data.map(d => d.value), 1)
   const barW = (W - pad * 2) / data.length - 8

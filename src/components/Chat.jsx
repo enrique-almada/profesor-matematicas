@@ -1,36 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
 import { sendMessage } from '../services/claude'
+import { getSubject, getGreeting } from '../subjects'
 import MessageRenderer from './MessageRenderer'
 import { useSpeech } from '../hooks/useSpeech'
 import './Chat.css'
 
-const SUGGESTED = {
-  primaria: [
-    '¿Cómo se hacen las fracciones?',
-    'Explícame la multiplicación',
-    '¿Qué es un número par?',
-    'Ayúdame con las tablas del 7',
-  ],
-  secundaria: [
-    '¿Cómo resuelvo una ecuación de primer grado?',
-    'Explícame el Teorema de Pitágoras',
-    '¿Qué es una función lineal?',
-    'Ayúdame con porcentajes',
-  ],
-  preparatoria: [
-    '¿Cómo se calcula una derivada?',
-    'Explícame los logaritmos',
-    '¿Qué es una integral?',
-    'Ayúdame con trigonometría',
-  ],
-}
-
-export default function Chat({ level }) {
+export default function Chat({ subjectId, level }) {
+  const subject = getSubject(subjectId)
   const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: `¡Hola! Soy tu Profesor de Matemáticas 🎓\n\nEstoy aquí para ayudarte con cualquier duda de matemáticas de nivel **${level}**. Puedes preguntarme cualquier cosa: desde conceptos básicos hasta problemas difíciles. ¡Vamos a aprender juntos!`,
-    },
+    { role: 'assistant', content: getGreeting(subjectId, level) },
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -46,11 +24,8 @@ export default function Chat({ level }) {
   }, [messages, loading])
 
   useEffect(() => {
-    setMessages([{
-      role: 'assistant',
-      content: `¡Hola! Soy tu Profesor de Matemáticas 🎓\n\nEstoy aquí para ayudarte con cualquier duda de matemáticas de nivel **${level}**. Puedes preguntarme cualquier cosa: desde conceptos básicos hasta problemas difíciles. ¡Vamos a aprender juntos!`,
-    }])
-  }, [level])
+    setMessages([{ role: 'assistant', content: getGreeting(subjectId, level) }])
+  }, [subjectId, level])
 
   const saveKey = () => {
     localStorage.setItem('anthropic_key', apiKey)
@@ -68,7 +43,7 @@ export default function Chat({ level }) {
 
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }))
-      const reply = await sendMessage(apiKey, level, history, userMsg)
+      const reply = await sendMessage(apiKey, subjectId, level, history, userMsg)
       setMessages(prev => [...prev, { role: 'assistant', content: reply }])
     } catch (err) {
       setMessages(prev => [...prev, {
@@ -114,7 +89,7 @@ export default function Chat({ level }) {
       <div className="messages">
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
-            {msg.role === 'assistant' && <span className="avatar">📐</span>}
+            {msg.role === 'assistant' && <span className="avatar">{subject.icon}</span>}
             <div className="bubble">
               <MessageRenderer content={msg.content} />
               {msg.role === 'assistant' && speechSupported && (
@@ -148,7 +123,7 @@ export default function Chat({ level }) {
         ))}
         {loading && (
           <div className="message assistant">
-            <span className="avatar">📐</span>
+            <span className="avatar">{subject.icon}</span>
             <div className="bubble typing">
               <span /><span /><span />
             </div>
@@ -158,7 +133,7 @@ export default function Chat({ level }) {
       </div>
 
       <div className="suggestions">
-        {SUGGESTED[level]?.map((s, i) => (
+        {subject.suggestedQuestions[level]?.map((s, i) => (
           <button key={i} className="suggestion" onClick={() => send(s)}>
             {s}
           </button>
@@ -168,7 +143,7 @@ export default function Chat({ level }) {
       <div className="input-row">
         <textarea
           className="chat-input"
-          placeholder="Escribe tu pregunta de matemáticas..."
+          placeholder={`Escribe tu pregunta de ${subject.label.toLowerCase()}...`}
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKey}

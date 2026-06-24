@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { generateExercise, checkAnswer } from '../services/claude'
+import { getSubject } from '../subjects'
 import './Exercises.css'
 
-const TOPICS = {
-  primaria: ['Sumas y restas', 'Multiplicación', 'Fracciones', 'Geometría básica', 'Problemas de lógica'],
-  secundaria: ['Álgebra', 'Ecuaciones', 'Geometría', 'Estadística', 'Porcentajes'],
-  preparatoria: ['Funciones', 'Trigonometría', 'Derivadas', 'Integrales', 'Logaritmos'],
-}
+// Mounted with key={`${subjectId}-${level}`} in App.jsx, so all state below
+// resets naturally on remount whenever the subject or level changes.
+export default function Exercises({ subjectId, level }) {
+  const subject = getSubject(subjectId)
+  const topicsForLevel = subject.topics[level]
 
-export default function Exercises({ level }) {
-  const [topic, setTopic] = useState(TOPICS[level][0])
+  const [topic, setTopic] = useState(topicsForLevel[0])
   const [exercise, setExercise] = useState(null)
   const [userAnswer, setUserAnswer] = useState('')
   const [feedback, setFeedback] = useState(null)
@@ -29,7 +29,7 @@ export default function Exercises({ level }) {
     setUserAnswer('')
     setExercise(null)
     try {
-      const ex = await generateExercise(apiKey, level, topic)
+      const ex = await generateExercise(apiKey, subjectId, level, topic)
       setExercise(ex)
     } catch (err) {
       alert('Error al generar ejercicio: ' + err.message)
@@ -42,7 +42,7 @@ export default function Exercises({ level }) {
     if (!userAnswer.trim()) return
     setChecking(true)
     try {
-      const result = await checkAnswer(apiKey, exercise, userAnswer, level)
+      const result = await checkAnswer(apiKey, subjectId, exercise, userAnswer, level)
       setFeedback(result)
       setScore(prev => ({
         correct: prev.correct + (result.correct ? 1 : 0),
@@ -61,7 +61,7 @@ export default function Exercises({ level }) {
         <div className="topic-selector">
           <label className="control-label">Tema:</label>
           <div className="topic-buttons">
-            {TOPICS[level].map(t => (
+            {topicsForLevel.map(t => (
               <button
                 key={t}
                 className={`topic-btn ${topic === t ? 'active' : ''}`}

@@ -33,25 +33,26 @@
   margin: 2px 0 0;
 }
 
-.level-picker {
+.picker {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.level-label {
+.picker-label {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-muted);
 }
 
-.level-buttons {
+.picker-buttons {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
-.level-btn {
+.picker-btn {
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 8px;
@@ -63,12 +64,12 @@
   transition: all 0.2s;
 }
 
-.level-btn:hover {
+.picker-btn:hover {
   border-color: var(--primary-light);
   color: var(--primary);
 }
 
-.level-btn.active {
+.picker-btn.active {
   background: var(--primary);
   border-color: var(--primary);
   color: white;
