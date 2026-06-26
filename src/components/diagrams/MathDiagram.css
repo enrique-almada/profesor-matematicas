@@ -1,5 +1,7 @@
+/* Fixed light background: the SVG diagrams use slate-on-white colors
+   that aren't theme-aware, so the wrapper stays light regardless of theme. */
 .diagram-wrap {
-  background: var(--surface);
+  background: #ffffff;
   border: 1.5px solid var(--border);
   border-radius: 12px;
   padding: 16px;

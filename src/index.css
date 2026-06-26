@@ -5,19 +5,21 @@
 }
 
 :root {
-  --primary: #4f46e5;
-  --primary-light: #818cf8;
-  --primary-dark: #3730a3;
-  --secondary: #10b981;
-  --secondary-dark: #059669;
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface2: #f1f5f9;
-  --text: #1e293b;
-  --text-muted: #64748b;
-  --border: #e2e8f0;
+  --primary: #818cf8;
+  --primary-light: #a5b4fc;
+  --primary-dark: #6366f1;
+  --secondary: #34d399;
+  --secondary-dark: #10b981;
+  --bg: #0d1117;
+  --surface: #161b29;
+  --surface2: #1e2538;
+  --sidebar-bg: #0a0e16;
+  --code-bg: #0a0e16;
+  --text: #e6e9f5;
+  --text-muted: #8b94ad;
+  --border: #262e45;
   --radius: 12px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.35);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -35,4 +37,22 @@ body {
 #root {
   min-height: 100vh;
   width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface2);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border);
 }

@@ -1,5 +1,5 @@
 import { SUBJECT_LIST } from '../subjects'
-import './Header.css'
+import './Sidebar.css'
 
 const LEVELS = [
   { value: 'primaria', label: '🎒 Primaria' },
@@ -7,12 +7,12 @@ const LEVELS = [
   { value: 'preparatoria', label: '🎓 Preparatoria' },
 ]
 
-export default function Header({ subjectId, setSubjectId, level, setLevel }) {
+export default function Sidebar({ subjectId, setSubjectId, level, setLevel }) {
   const activeSubject = SUBJECT_LIST.find(s => s.id === subjectId)
 
   return (
-    <header className="header">
-      <div className="header-left">
+    <aside className="sidebar">
+      <div className="brand">
         <span className="logo">{activeSubject?.icon ?? '🎓'}</span>
         <div>
           <h1 className="title">Tutor IA</h1>
@@ -20,28 +20,29 @@ export default function Header({ subjectId, setSubjectId, level, setLevel }) {
         </div>
       </div>
 
-      <div className="picker">
-        <span className="picker-label">Materia:</span>
-        <div className="picker-buttons">
+      <div className="nav-section">
+        <span className="nav-label">Materia</span>
+        <nav className="subject-nav">
           {SUBJECT_LIST.map(s => (
             <button
               key={s.id}
-              className={`picker-btn ${subjectId === s.id ? 'active' : ''}`}
+              className={`subject-btn ${subjectId === s.id ? 'active' : ''}`}
               onClick={() => setSubjectId(s.id)}
             >
-              {s.icon} {s.label}
+              <span className="subject-icon">{s.icon}</span>
+              {s.label}
             </button>
           ))}
-        </div>
+        </nav>
       </div>
 
-      <div className="picker">
-        <span className="picker-label">Nivel:</span>
-        <div className="picker-buttons">
+      <div className="nav-section">
+        <span className="nav-label">Nivel</span>
+        <div className="level-switch">
           {LEVELS.map(l => (
             <button
               key={l.value}
-              className={`picker-btn ${level === l.value ? 'active' : ''}`}
+              className={`level-btn ${level === l.value ? 'active' : ''}`}
               onClick={() => setLevel(l.value)}
             >
               {l.label}
@@ -49,6 +50,8 @@ export default function Header({ subjectId, setSubjectId, level, setLevel }) {
           ))}
         </div>
       </div>
-    </header>
+
+      <p className="sidebar-footer">Impulsado por Claude</p>
+    </aside>
   )
 }

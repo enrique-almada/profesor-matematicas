@@ -1,0 +1,172 @@
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}
+
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.subject-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subject-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+
+.subject-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.subject-btn:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.subject-btn.active {
+  background: var(--surface2);
+  border-left-color: var(--primary);
+  color: var(--primary-light);
+  font-weight: 600;
+}
+
+.level-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.level-btn {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+
+.level-btn:hover {
+  border-color: var(--primary-light);
+  color: var(--primary-light);
+}
+
+.level-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 20px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-section {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .subject-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .subject-btn {
+    border-left: none;
+    border: 1.5px solid var(--border);
+  }
+
+  .subject-btn.active {
+    border-color: var(--primary);
+  }
+
+  .level-switch {
+    flex-direction: row;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+}

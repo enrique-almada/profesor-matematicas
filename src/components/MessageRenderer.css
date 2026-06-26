@@ -13,7 +13,7 @@
 }
 
 .msg-renderer h2, .msg-renderer h3, .msg-renderer h4 {
-  color: var(--primary-dark);
+  color: var(--primary-light);
   margin: 12px 0 6px;
   font-size: 15px;
 }
@@ -30,7 +30,7 @@
 }
 
 .msg-renderer code {
-  background: rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.08);
   padding: 2px 6px;
   border-radius: 4px;
   font-family: monospace;
@@ -38,7 +38,7 @@
 }
 
 .msg-renderer pre {
-  background: #1e293b;
+  background: var(--code-bg);
   color: #e2e8f0;
   border-radius: 8px;
   padding: 14px 16px;

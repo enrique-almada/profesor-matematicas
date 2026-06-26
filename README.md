@@ -47,7 +47,7 @@ src/
     probabilidad-estadistica/
     lengua-literatura/
   components/
-    Header.jsx                # Selector de materia y de nivel
+    Sidebar.jsx                # Selector de materia y de nivel
     Chat.jsx                  # Chat con el tutor IA
     Exercises.jsx             # Generador de ejercicios
     MessageRenderer.jsx       # Renderiza markdown, LaTeX y diagramas
@@ -63,4 +63,4 @@ src/
 2. Regístrala en `src/subjects/index.js` (`SUBJECTS`).
 3. Si necesita diagramas nuevos, créalos en `src/components/diagrams/<Materia>Diagrams.jsx` y regístralos en `src/components/diagrams/index.js` (`DIAGRAM_REGISTRY`).
 
-Ningún componente (`Header`, `Chat`, `Exercises`, etc.) necesita cambios.
+Ningún componente (`Sidebar`, `Chat`, `Exercises`, etc.) necesita cambios.
